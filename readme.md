@@ -1,6 +1,7 @@
 # Model-Based Active Exploration (MAX)
 Code for reproducing experiments in [Model-Based Active Exploration](https://arxiv.org/abs/1810.12162
 ), ICML 2019 
+
 Written in PyTorch v1.0. 
 
 Code relies on [sacred](http://sacred.readthedocs.io) for managing experiments and hyper-parameters.
