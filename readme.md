@@ -1,8 +1,6 @@
 # Model-Based Active Exploration (MAX)
-Code for reproducing experiments in Model-Based Active Exploration, ICML 2019 https://arxiv.org/abs/1810.12162
-
-Magellan is the internal code name of the project inspired by life of [Ferdinand Magellan](https://en.wikipedia.org/wiki/Ferdinand_Magellan).
-
+Code for reproducing experiments in [Model-Based Active Exploration](https://arxiv.org/abs/1810.12162
+), ICML 2019 
 Written in PyTorch v1.0. 
 
 Code relies on [sacred](http://sacred.readthedocs.io) for managing experiments and hyper-parameters.
@@ -120,3 +118,6 @@ python main.py with max_explore env_name=MagellanAnt-v2 exploration_mode=reactiv
 ```
 python main.py with random_explore env_name=MagellanAnt-v2 env_noise_stdev=0.02 eval_freq=1500 checkpoint_frequency=1500
 ```
+
+## Magellan
+Magellan is the internal code name of the project inspired by life of [Ferdinand Magellan](https://en.wikipedia.org/wiki/Ferdinand_Magellan).
