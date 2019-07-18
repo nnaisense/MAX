@@ -72,7 +72,7 @@ def infra_config():
     checkpoint_frequency = 2000                     # dump buffer with normalizer every checkpoint_frequency steps
 
     disable_cuda = False                            # if true: do not ues cuda even though its available
-    omp_num_threads = 8                             # for high CPU count machines
+    omp_num_threads = 1                             # for high CPU count machines
 
     if not disable_cuda and torch.cuda.is_available():
         device = torch.device('cuda')
@@ -180,15 +180,19 @@ Initialization Helpers
 
 
 @ex.capture
-def get_env(env_name, record, env_noise_stdev):
+def get_env(env_name, env_noise_stdev, record):
     env = gym.make(env_name)
     env = BoundedActionsEnv(env)
 
     if env_noise_stdev:
         env = NoisyEnv(env, stdev=env_noise_stdev)
-
     if record:
         env = RecordedEnv(env)
+
+    env.seed(np.random.randint(np.iinfo(np.uint32).max))
+    env.action_space.seed(np.random.randint(np.iinfo(np.uint32).max))
+    env.observation_space.seed(np.random.randint(np.iinfo(np.uint32).max))
+    atexit.register(lambda: env.close())
 
     return env
 
@@ -431,8 +435,6 @@ def transition_novelty(state, action, next_state, model, renyi_decay):
 
 @ex.capture
 def evaluate_task(env, model, buffer, task, render, filename, record, save_eval_agents, verbosity, _run, _log):
-    env.seed(np.random.randint(2 ** 32 - 1))
-
     video_filename = f'{filename}.mp4'
     if record:
         state = env.reset(filename=video_filename)
@@ -513,7 +515,6 @@ def evaluate_tasks(buffer, step_num, n_eval_episodes, evaluation_model_epochs, r
 @ex.capture
 def evaluate_utility(buffer, exploring_model_epochs, model_train_freq, n_eval_episodes, _log, _run):
     env = get_env()
-    env.seed(np.random.randint(2 ** 32 - 1))
 
     measure = get_utility_measure(utility_measure='renyi_div', utility_action_norm_penalty=0)
 
@@ -569,8 +570,6 @@ def do_max_exploration(seed, action_noise_stdev, n_exploration_steps, n_warm_up_
                        eval_freq, checkpoint_frequency, render, record, dump_dir, _config, _log, _run):
 
     env = get_env()
-    env.seed(seed)
-    atexit.register(lambda: env.close())
 
     buffer = get_buffer()
     exploration_measure = get_utility_measure()
@@ -658,8 +657,6 @@ def do_max_exploration(seed, action_noise_stdev, n_exploration_steps, n_warm_up_
 @ex.capture
 def do_random_exploration(seed, normalize_data, n_exploration_steps, n_warm_up_steps, eval_freq, _log):
     env = get_env()
-    env.seed(seed)
-    atexit.register(lambda: env.close())
 
     buffer = get_buffer()
     if normalize_data:
@@ -698,8 +695,6 @@ def do_exploitation(seed, normalize_data, n_exploration_steps, buffer_file, ense
         buffer.ensemble_size = ensemble_size
     else:
         env = get_env()
-        env.seed(seed)
-        atexit.register(lambda: env.close())
 
         buffer = get_buffer()
         if normalize_data:

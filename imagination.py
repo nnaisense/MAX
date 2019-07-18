@@ -26,6 +26,7 @@ class Imagination:
         self.ensemble_size = model.ensemble_size
 
         self.action_space = Box(low=-1.0, high=1.0, shape=(n_actors, self.model.d_action), dtype=np.float32)
+        self.action_space.seed(np.random.randint(np.iinfo(np.uint32).max))
 
         self.init_state = None
         self.states = None

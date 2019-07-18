@@ -114,6 +114,7 @@ def get_agent(reward_func, d_state, d_action, replay_size, batch_size, n_hidden,
 def evaluate_agent(agent, device, _log):
     env = get_env()
     env.seed(np.random.randint(2 ** 32 - 1))
+    env.action_space.seed(np.random.randint(2 ** 32 - 1))
 
     returns = []
     for _ in range(20):

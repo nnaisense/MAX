@@ -108,7 +108,7 @@ dependencies:
     - docopt==0.6.2
     - future==0.16.0
     - glfw==1.7.0
-    - gym==0.10.8
+    - gym==0.13.1
     - h5py==2.8.0
     - imageio==2.4.1
     - jsonpickle==0.9.6
