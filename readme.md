@@ -93,31 +93,29 @@ python main.py with random_explore env_noise_stdev=0.02
 
 #### Ant
 
-Uncomment lines 474-481 and comment out lines 483-506 in `main.py`.
-
 * MAX:
 ```
-python main.py with max_explore env_name=MagellanAnt-v2 env_noise_stdev=0.02 eval_freq=1500 checkpoint_frequency=1500
+python main.py with max_explore env_name=MagellanAnt-v2 env_noise_stdev=0.02 eval_freq=1500 checkpoint_frequency=1500 ant_coverage=True
 ```
 
 * Trajectory Variance Active Exploration:
 ```
-python main.py with max_explore env_name=MagellanAnt-v2 utility_measure=traj_stdev policy_explore_alpha=0.2 env_noise_stdev=0.02 eval_freq=1500 checkpoint_frequency=1500
+python main.py with max_explore env_name=MagellanAnt-v2 utility_measure=traj_stdev policy_explore_alpha=0.2 env_noise_stdev=0.02 eval_freq=1500 checkpoint_frequency=1500 ant_coverage=True
 ```
 
 * Renyi Divergence Reactive Exploration:
 ```
-python main.py with max_explore env_name=MagellanAnt-v2 exploration_mode=reactive env_noise_stdev=0.02 eval_freq=1500 checkpoint_frequency=1500
+python main.py with max_explore env_name=MagellanAnt-v2 exploration_mode=reactive env_noise_stdev=0.02 eval_freq=1500 checkpoint_frequency=1500 ant_coverage=True
 ```
 
 * Prediction Error Reactive Exploration:
 ```
-python main.py with max_explore env_name=MagellanAnt-v2 exploration_mode=reactive utility_measure=pred_err policy_explore_alpha=0.2 env_noise_stdev=0.02 eval_freq=1500 checkpoint_frequency=1500
+python main.py with max_explore env_name=MagellanAnt-v2 exploration_mode=reactive utility_measure=pred_err policy_explore_alpha=0.2 env_noise_stdev=0.02 eval_freq=1500 checkpoint_frequency=1500 ant_coverage=True
 ```
 
 * Random Exploration:
 ```
-python main.py with random_explore env_name=MagellanAnt-v2 env_noise_stdev=0.02 eval_freq=1500 checkpoint_frequency=1500
+python main.py with random_explore env_name=MagellanAnt-v2 env_noise_stdev=0.02 eval_freq=1500 checkpoint_frequency=1500 ant_coverage=True
 ```
 
 ## Magellan

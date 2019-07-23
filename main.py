@@ -40,6 +40,7 @@ def config():
     max_exploration = False
     random_exploration = False
     exploitation = False
+    ant_coverage = False
 
 
 # noinspection PyUnusedLocal
@@ -477,14 +478,14 @@ def evaluate_task(env, model, buffer, task, render, filename, record, save_eval_
 
 
 @ex.capture
-def evaluate_tasks(buffer, step_num, n_eval_episodes, evaluation_model_epochs, render, dump_dir, _log, _run):
-    # Uncomment for exploration coverage in ant
-    #from envs.ant import rate_buffer
-    #coverage = rate_buffer(buffer=buffer)
-    #_run.log_scalar("coverage", coverage, step_num)
-    #_run.result = coverage
-    #_log.info(f"coverage: {coverage}")
-    #return coverage
+def evaluate_tasks(buffer, step_num, n_eval_episodes, evaluation_model_epochs, render, dump_dir, ant_coverage, _log, _run):
+    if ant_coverage:
+        from envs.ant import rate_buffer
+        coverage = rate_buffer(buffer=buffer)
+        _run.log_scalar("coverage", coverage, step_num)
+        _run.result = coverage
+        _log.info(f"coverage: {coverage}")
+        return coverage
 
     model = fit_model(buffer=buffer, n_epochs=evaluation_model_epochs, step_num=step_num, mode='exploit')
     env = get_env()
